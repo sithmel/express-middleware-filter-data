@@ -1,6 +1,6 @@
 {
   "name": "express-middleware-filter-data",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A middleware for filtering JSON output",
   "main": "index.js",
   "scripts": {

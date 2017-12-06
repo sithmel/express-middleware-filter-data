@@ -1,13 +1,23 @@
-const Sieve = require('obj-sieve');
+const Sieve = require('obj-sieve')
 
-module.exports = function getFilter(queryParam) {
+module.exports = function getFilter (queryParam, onError) {
+  onError = onError || function (e) { console.log('Filter error: ', e.message) }
   return function (req, res, next) {
-    const jsonFunc = res.json;
+    const jsonFunc = res.json
+    res.locals.sieve = new Sieve()
+
     res.json = function (obj) {
-      const newObj = req.query[queryParam] ?
-        Sieve.filter(req.query[queryParam], obj) : obj;
-      jsonFunc(newObj);
-    };
-    next();
-  };
-};
+      req.query[queryParam] && res.locals.sieve.include(req.query[queryParam])
+      try {
+        const newObj = res.locals.sieve.apply(obj)
+        jsonFunc(newObj)
+      } catch (e) {
+        onError(e)
+        res.locals.sieve._paths.include = []
+        const newObj = res.locals.sieve.apply(obj)
+        jsonFunc(newObj)
+      }
+    }
+    next()
+  }
+}

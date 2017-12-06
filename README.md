@@ -29,4 +29,15 @@ http://localhost:3000/data?filter=user.products // filters only the content of u
 ```
 http://localhost:3000/data?filter=users[:10]name // first ten users names
 ```
-The full syntax is explained here: https://github.com/sithmel/obj-sieve
+The full syntax is explained here: https://github.com/sithmel/obj-sieve or https://github.com/sithmel/obj-path-expression-parser
+
+Errors
+------
+If the filter is formally incorrect, it won't be used. You can provide a callback to manage the error (by default it is logged in the console).
+```js
+const filterMiddleware = getFilterMiddleware('filter', (e) => ... do something with the error ...);
+```
+
+Using obj-sieve instance
+------------------------
+The middleware uses obj-sieve https://github.com/sithmel/obj-sieve. You can access the sieve instance on **res.locals.sieve**.

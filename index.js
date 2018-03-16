@@ -10,12 +10,12 @@ module.exports = function getFilter (queryParam, onError) {
       req.query[queryParam] && res.locals.sieve.include(req.query[queryParam])
       try {
         const newObj = res.locals.sieve.apply(obj)
-        jsonFunc(newObj)
+        jsonFunc.bind(res)(newObj)
       } catch (e) {
         onError(e)
         res.locals.sieve._paths.include = []
         const newObj = res.locals.sieve.apply(obj)
-        jsonFunc(newObj)
+        jsonFunc.bind(res)(newObj)
       }
     }
     next()

@@ -34,6 +34,6 @@
     "sinon": "^4.1.2"
   },
   "dependencies": {
-    "obj-sieve": "0.0.5"
+    "obj-sieve": "0.0.6"
   }
 }
